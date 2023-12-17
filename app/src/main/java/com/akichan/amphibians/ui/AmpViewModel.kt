@@ -6,12 +6,13 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.akichan.amphibians.model.AmpItems
 import com.akichan.amphibians.network.AmpApi
 import kotlinx.coroutines.launch
 import java.io.IOException
 
 sealed interface AmpUiState {
-    data class Success (val photos: String) : AmpUiState
+    data class Success (val ampItems: List<AmpItems>) : AmpUiState
     object Error : AmpUiState
     object Loading : AmpUiState
 }
@@ -30,7 +31,7 @@ class AmpViewModel: ViewModel() {
             ampUiState = try {
                 val listResult = AmpApi.retrofitService.getAmps()
                 AmpUiState.Success(
-                    "${listResult.size}"
+                    listResult
                 )
             } catch (e: IOException) {
                 AmpUiState.Error

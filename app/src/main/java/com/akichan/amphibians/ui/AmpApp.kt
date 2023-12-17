@@ -34,7 +34,7 @@ fun AmpApp() {
                 .padding(it)
         ){
             val ampViewModel: AmpViewModel = viewModel()
-            Homescreen()
+            Homescreen(ampUiState = ampViewModel.ampUiState, retryAction = ampViewModel::getAmpData)
         }
     }
 
